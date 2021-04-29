@@ -63,6 +63,7 @@ class App extends React.Component {
 
   doVote = (event => {
     const my_rating = event.target.id;
+    console.log(`my rating: ${my_rating}`)
     // Write value
     const biome_name = this.state.currentBiome;
     const is_my_favorite = false;
@@ -79,12 +80,17 @@ class App extends React.Component {
     for (let i=0; i<user_ratings.length; i++) {
       let entry = user_ratings[i];
       if (entry.biome_entry_name === biome_name) {
+        console.log(`Found biome ${biome_name} = ${entry.biome_entry_name}`)
         // existing entry found, edit entry
+        // get user's old rating
+        const my_old_rating = entry.my_rating;
+        console.log(`user's old rating: ${my_old_rating}`)
         entry.my_rating = my_rating;
+        console.log(`User's new rating for ${biome_name}: ${entry.my_rating}`)
 
         // edit rating for biomes list rating
         // probably not good to have this in twice but I'm kind of in a hurry
-        const index = biome_ratings.indexOf(Number(my_rating));
+        const index = biome_ratings.indexOf(Number(my_old_rating));
         if (index === -1) {
           console.log("Mismatch found in doVote. Didn't find a vote that was to be changed.");
         }
@@ -101,7 +107,7 @@ class App extends React.Component {
     biome_ratings.push(my_rating);
     // add to stated
     this.setState({user: {
-                    ratings} = user_ratings});
+                    ratings: user_ratings}});
 
     this.setState({biome: {
                     ratings: biome_ratings
