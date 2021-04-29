@@ -20,7 +20,7 @@ const Comments = (props) => {
 	}
 
 	return ( <section className="comments">
-				<span class="heading">Comments</span><br />
+				<span className="heading">Comments</span><br />
 				{makeComments()}
 			</section>
 			);

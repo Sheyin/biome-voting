@@ -4,7 +4,7 @@ import Comments from './Comments';
 import './style/BiomePage.css';
 
 const BiomePage = (props) => {
-	const {biome, user_rating} = props;
+	const {biome, user_rating, do_vote} = props;
 	//console.log(`biome: ${biome}`);
 	//console.log(`user_rating: ${user_rating}`);
 
@@ -17,9 +17,10 @@ const BiomePage = (props) => {
 			/>
 			<BiomeStatistics 
 				ratings={biome.ratings} 
-				favorites = {biome.favorites}
+				favorites={biome.favorites}
 				my_rating={user_rating.my_rating} 
 				is_my_favorite={user_rating.is_my_favorite}
+				do_vote={do_vote}
 			/>
 			<Comments 
 				comments={biome.biome_comments}

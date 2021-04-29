@@ -5,7 +5,7 @@ const BiomeDescription = (props) => {
 	return ( 
   <section className="description">
     <figcaption>
-      <span class="heading">Description</span><br />
+      <span className="heading">Description</span><br />
       {description}</figcaption>
     <figure><img 
       src={require('../data/' + image).default} 

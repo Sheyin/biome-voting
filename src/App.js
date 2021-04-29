@@ -9,7 +9,7 @@ class App extends React.Component {
     super();
     this.state = {
       username: "Me",
-      currentBiome: "",
+      currentBiome: "biomesoplenty:alps",
       biomes: ["Alps", "Bayou", "Bog", "Boreal Forest", "Brushland", "Chaparral", "Cherry Blossom Grove", "Cold Desert", "Coniferous Forest", "Dead Forest", "Dead Swamp", "Floodplain", "Fungal Jungle", "Grassland", "Grove"],
       // temporary
       biome: {
@@ -61,6 +61,52 @@ class App extends React.Component {
     }
   }
 
+  doVote = (event => {
+    const my_rating = event.target.id;
+    // Write value
+    const biome_name = this.state.currentBiome;
+    const is_my_favorite = false;
+    const rating = {
+      biome_entry_name: biome_name,
+      my_rating: my_rating,
+      is_my_favorite: is_my_favorite
+    }
+    // todo - this needs to match input
+    let user_ratings = this.state.user.ratings;
+    let biome_ratings = this.state.biome.ratings;
+
+    // Check if the user has voted before
+    for (let i=0; i<user_ratings.length; i++) {
+      let entry = user_ratings[i];
+      if (entry.biome_entry_name === biome_name) {
+        // existing entry found, edit entry
+        entry.my_rating = my_rating;
+
+        // edit rating for biomes list rating
+        // probably not good to have this in twice but I'm kind of in a hurry
+        const index = biome_ratings.indexOf(Number(my_rating));
+        if (index === -1) {
+          console.log("Mismatch found in doVote. Didn't find a vote that was to be changed.");
+        }
+        else {
+          biome_ratings[index] = my_rating;
+        }
+        return;
+      }
+    } // end for-loop
+
+    // entry not found (hasn't voted on this before)
+    // Value was not found in user's vote history - new entry needed
+    user_ratings.push(rating);
+    biome_ratings.push(my_rating);
+    // add to stated
+    this.setState({user: {
+                    ratings} = user_ratings});
+
+    this.setState({biome: {
+                    ratings: biome_ratings
+                  }});
+  })
 
 
   // This expression will probably change over to decomposing objects from database
@@ -80,6 +126,7 @@ class App extends React.Component {
         <BiomePage
           biome={this.state.biome}
           user_rating = {get_user_rating_for_biome(this.state.biome.biome_entry_name, this.state.user.ratings)}
+          do_vote= {this.doVote}
           />
 
         <footer>Back or Next</footer>

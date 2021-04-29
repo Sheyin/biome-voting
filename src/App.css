@@ -38,6 +38,10 @@ nav {
 	box-shadow: 2px 2px 2px #6e8291;
 }
 
+.vote {
+	cursor: pointer;
+}
+
 body,
 html {
 	margin: 0px;
