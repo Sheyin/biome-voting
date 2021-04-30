@@ -44,6 +44,20 @@ nav {
 	cursor: pointer;
 }
 
+/* Registration page - only appears if this appears to be a new user */
+#registration {
+	z-index: 5;
+	position: absolute;
+	top: 20%;
+	left: 20%;
+	width: 50%;
+	height: 40%;
+}
+
+.hidden {
+	display: none;
+}
+
 body,
 html {
 	margin: 0px;

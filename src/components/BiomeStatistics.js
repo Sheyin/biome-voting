@@ -1,5 +1,6 @@
 import Voting from './Voting';
-import React from 'react';
+import React, { useEffect } from 'react';
+
 
 const BiomeStatistics = (props) => {
 	let {ratings, my_rating, do_vote} = props;
@@ -9,8 +10,15 @@ const BiomeStatistics = (props) => {
 		ratings = [];
 	}
 
+	// Update the statistics after user has voted
+	useEffect(() => {
+		showMyRating();
+		showAverage();
+	})
+
 	// Calculates the average of the ratings, returns a number (float/double)
 	const average = () => {
+		//console.log("Average from these values: " + ratings);
 		let total = 0;
 		ratings.forEach(x => {
 			total += x;
@@ -21,6 +29,7 @@ const BiomeStatistics = (props) => {
 		return Number(average);
 	}
 
+	// Render the user's vote if known, else put placeholder text telling them to vote.
 	const showMyRating = () => {
 		if (my_rating > -1) {
 			return (
@@ -38,8 +47,12 @@ const BiomeStatistics = (props) => {
 		}
 	}
 
+	// Render the average rating if known, else hide section entirely.
 	const showAverage = () => {
+		//console.log("showAverage() called");
+		// had isNaN(ratings) here before but arrays are NaN....
 		if (ratings.length === 0) {
+			//console.log("No ratings to show: " + ratings)
 			return;
 		}
 		else {
@@ -67,6 +80,7 @@ const BiomeStatistics = (props) => {
 				🌲... More trees, more often <br />
 				<Voting 
 					do_vote = {do_vote}
+					my_rating = {my_rating}
 				/>
 			</div>
 		  </section>
