@@ -4,6 +4,9 @@ const Comments = (props) => {
 	const comments = props.comments;
 
 	const makeComments = () => {
+		if (!comments) {
+			return;
+		}
 		let id=0;
 		let comment_list = [];
 		comments.forEach(x => {

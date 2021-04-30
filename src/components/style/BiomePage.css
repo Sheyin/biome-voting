@@ -24,8 +24,6 @@ img {
 
 figcaption {
 	display: inline;
-	margin-left: auto;
-	margin-right: auto;
 }
 
 figure {
@@ -51,6 +49,14 @@ figure {
 
 .heading {
 	font-size: 1.3em;
+	font-weight: bold;
+}
+
+.title {
+	background-color: #9bb9d1;
+	border: 0;
+	box-shadow: none;
+	font-size: 2.3em;
 	font-weight: bold;
 }
 

@@ -5,12 +5,10 @@ import './style/BiomePage.css';
 
 const BiomePage = (props) => {
 	const {biome, user_rating, do_vote} = props;
-	//console.log(`biome: ${biome}`);
-	//console.log(`user_rating: ${user_rating}`);
-
 
 	return ( 
 		<main>
+			<section className="title">{biome.biome_short_name}</section>
 			<BiomeDescription 
 				description={biome.description}
 				image={biome.image_name}
@@ -30,3 +28,10 @@ const BiomePage = (props) => {
 	}
  
 export default BiomePage;
+
+/*
+
+
+
+
+*/

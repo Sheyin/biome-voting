@@ -16,6 +16,7 @@ header {
 }
 
 footer {
+	font-size: 1.3em;
 	grid-column-start: 2;
 	text-align: center;
 }
@@ -35,6 +36,7 @@ nav {
 	font-size: 1.2em;
 	background-color: white;
 	padding: 2px;
+	margin-bottom: 4px;
 	box-shadow: 2px 2px 2px #6e8291;
 }
 
