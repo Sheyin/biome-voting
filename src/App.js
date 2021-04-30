@@ -157,4 +157,10 @@ function get_user_rating_for_biome(biome, user_ratings) {
   console.log(`Error in get_user_rating_for_biome(${biome}) - not found in user ratings`);
 }
 
+
+// This is intended to get spreadsheet data... I think
+function getData() {
+
+}
+
 export default App;
