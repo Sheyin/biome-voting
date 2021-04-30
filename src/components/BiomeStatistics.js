@@ -2,7 +2,7 @@ import Voting from './Voting';
 import React from 'react';
 
 const BiomeStatistics = (props) => {
-	let {ratings, favorite_count, my_rating, is_my_favorite, do_vote} = props;
+	let {ratings, my_rating, do_vote} = props;
 
 	// Because of how Firebase works, it may elect to simply not save fields with null values.
 	if (!ratings) {
@@ -58,19 +58,16 @@ const BiomeStatistics = (props) => {
 				<span className="label">Current number of votes:</span> {ratings.length} <br />
 				{showMyRating()}
 				{showAverage()}
-				<span className="label">Number of favorites:</span> {favorite_count} <br />
 			</div>
 
 			<div className="voting split-box">
 				<span className="heading">Voting</span><br />
 				How badly do you want this biome? <br />
-				0🚫... Not at all <br />
-				10🌲... Hell yes <br />
+				🚫... Not at all <br />
+				🌲... More trees, more often <br />
 				<Voting 
 					do_vote = {do_vote}
 				/>
-
-				Favorite this biome? (checkbox) {is_my_favorite}<br />
 			</div>
 		  </section>
 	 );

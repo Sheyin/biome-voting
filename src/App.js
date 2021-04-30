@@ -118,7 +118,7 @@ class App extends React.Component {
   }
 
    // Someone clicked "Forward" on the bottom navigation
-   doForward = () => {
+  doForward = () => {
      console.log("doForward was clicked");
     let current_biome = this.state.current_biome;
     if (current_biome === (this.state.biomes.length - 1)) {
@@ -128,6 +128,11 @@ class App extends React.Component {
       current_biome += 1;
     }
     this.setState({current_biome});
+  }
+
+  // Someone clicked on the navigation sidebar
+  doNavigation = (event) => {
+    this.setState({current_biome: event.target.id});
   }
 
   // note to self- current biome highlight, do from app.css
@@ -153,15 +158,16 @@ class App extends React.Component {
   
           <NavigationSidebar 
             biomes={getBiomeNameList(this.state.biomes)}
+            do_navigation = {this.doNavigation}
           />
   
           <BiomePage
             biome={biome}
             user_rating = {get_user_rating_for_biome(biome.biome_entry_name, this.state.user.ratings)}
-            do_vote= {this.doVote}
+            do_vote = {this.doVote}
             />
   
-          <footer><span onClick={this.doBack} className="vote">Back</span> or <span onClick={this.doForward} className="vote">Next</span></footer>
+          <footer><span onClick={this.doBack} className="clickable">Back</span> or <span onClick={this.doForward} className="clickable">Next</span></footer>
         </div>
       );
     }

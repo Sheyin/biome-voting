@@ -15,9 +15,7 @@ const BiomePage = (props) => {
 			/>
 			<BiomeStatistics 
 				ratings={biome.ratings} 
-				favorites={biome.favorites}
 				my_rating={user_rating.my_rating} 
-				is_my_favorite={user_rating.is_my_favorite}
 				do_vote={do_vote}
 			/>
 			<Comments 

@@ -25,7 +25,6 @@ with open(filename) as f:
             'description': description,
             'link_to_wiki': link_to_wiki,
             'ratings': [],
-            'favorites': 0
         }
         biomes.append(biome_data)
 
