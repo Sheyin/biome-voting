@@ -1,22 +1,19 @@
-import React, { useEffect } from "react"
-
+import React, {useEffect} from "react"
 
 const NavigationSidebar = (props) => {
-
-
-
 
 	if (props.show_navbar) {
 		let links = [];
 		let i = 0;
-	
+
 		props.biomes.forEach(biome => {
+			let classes = "navigation clickable"
+
+			// This gives a slightly inset look to the biome the user is currenly on.
 			if (i === props.current_biome) {
-				links.push(<div className="navigation clickable neumorphism-inset" key={i} id={i} onClick={props.do_navigation}>{biome}</div>);
+				classes += " neumorphism-inset";
 			}
-			else {
-				links.push(<div className="navigation clickable" key={i} id={i} onClick={props.do_navigation}>{biome}</div>);
-			}
+			links.push(<div className={classes} key={i} id={i} onClick={props.do_navigation}>{biome}</div>);
 			i++;
 		})
 		return (

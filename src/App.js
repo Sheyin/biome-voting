@@ -345,8 +345,6 @@ class App extends React.Component {
           do_forward = {this.doForward}
           add_comment = {this.addComment}
           />
-
-        
       </div>
     );
   }

@@ -29,8 +29,6 @@ const BiomeStatistics = (props) => {
 		})
 		// Rounding result - this will produce a string
 		let average = Number(total/ratings.length);
-		console.log(`Calculated average: ${average}`);
-		console.log(typeof(average));
 
 		// TIL.  Switch only works with discrete values.
 		if (average === 0) {
