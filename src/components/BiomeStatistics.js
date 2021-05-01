@@ -10,6 +10,10 @@ const BiomeStatistics = (props) => {
 		ratings = [];
 	}
 
+	if (isNaN(my_rating)) {
+		my_rating = -1;
+	}
+
 	// Update the statistics after user has voted
 	useEffect(() => {
 		showMyRating();
@@ -65,7 +69,7 @@ const BiomeStatistics = (props) => {
 	}
 
 	return ( 
-		<section className="statistics-and-voting">
+		<section className="statistics-and-voting content">
 			<div className="statistics split-box">
 				<span className="heading">Statistics</span><br />
 				<span className="label">Current number of votes:</span> {ratings.length} <br />
@@ -77,7 +81,7 @@ const BiomeStatistics = (props) => {
 				<span className="heading">Voting</span><br />
 				How badly do you want this biome? <br />
 				🚫... Not at all <br />
-				🌲... More trees, more often <br />
+				❤️... More hearts, more often! <br />
 				<Voting 
 					do_vote = {do_vote}
 					my_rating = {my_rating}

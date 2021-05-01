@@ -9,7 +9,9 @@ const BiomeDescription = (props) => {
       {description}</figcaption>
     <figure><img 
       src={require('../data/' + image).default} 
-      alt=""/></figure>
+      alt=""
+      className="biome-image"
+      /></figure>
   </section> 
 );
 }

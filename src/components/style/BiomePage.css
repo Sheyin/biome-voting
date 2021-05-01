@@ -3,24 +3,36 @@ main {
 	flex-direction: column;
 	padding-left: 10px;
 	padding-right: 10px;
+	margin-top: 20px;
 }
 
 section {
 	width: 85%;
-	border: 1px solid black;
-	border-radius: 12px;
+	/*border: 1px solid black; */
 	margin-bottom: 20px;
 	margin-left: auto;
 	margin-right: auto;
-	padding: 10px;
-	background-color: #ffffff;
-	box-shadow: 10px 5px 5px grey;
+	padding: 20px;
+	border-radius: 22px;
+	background: linear-gradient(145deg, #f6faff, #cfd3d8);
+	box-shadow: 6px 6px 10px #a8abaf, -6px -6px 10px #ffffff;
 }
 
-img {
+.content {
+	min-height: 200px;
+}
+
+.biome-image {
 	width: 300px;
 	height: 169px;
 	margin-right: 0px;
+}
+
+.torch {
+	width: 10px;
+	height: 28px;
+	margin-left: 3px;
+	margin-right: 3px;
 }
 
 figcaption {
@@ -59,9 +71,7 @@ figure {
 }
 
 .title {
-	background-color: #9bb9d1;
 	border: 0;
-	box-shadow: none;
 	font-size: 2.3em;
 	font-weight: bold;
 }

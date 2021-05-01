@@ -3,7 +3,16 @@ import { useEffect } from 'react';
 const Voting = (props) => {
 	const do_vote = props.do_vote;
 	const value_zero = "🚫";
-	const value_positive = "🌲";
+	const value_positive = "❤️";
+	//const value_positive = "🌲";
+	/*
+	const value_positive = () => {
+		return (
+			<img src={require('../data/torch.png').default}  
+			className="torch" onMouseOver={onHover} onClick={do_vote}
+			/>
+		)
+	} */
 
 	// This gets launched whenever component mounted or re-rendered
 	useEffect(() => {

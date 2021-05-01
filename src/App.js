@@ -9,11 +9,11 @@ class App extends React.Component {
   constructor() {
     super();
     this.state = {
-      username: "Me",
-      current_biome: 0,
+      current_biome: -1,
       biomes: [],
+      is_logged_in: false,
+      show_navbar: false,
       user: {
-        name: "Me",
         ratings: []
       }
     }
@@ -27,12 +27,14 @@ class App extends React.Component {
       state: 'biomes',
       asArray: true
     });
-    setTimeout(this.checkIfReturningUser, 3000);
+    this.checkIfReturningUser();
+    //setTimeout(this.checkIfReturningUser, 2000);
   }
 
+  /*
   componentWillUnmount() {
     base.removeBinding(this.ref);
-  }
+  } */
 
 
   // Has the user been here before?
@@ -40,19 +42,17 @@ class App extends React.Component {
   // Not the most secure system here
   checkIfReturningUser = () => {
     let username = localStorage.getItem('username');
-    console.log("Username:" + username);
+    console.log("Returning Username:" + username);
     // user has been here before
     if (username) {
-      this.setState({username});
+      this.setState({username, is_logged_in: true});
       // get user data based on username
       this.syncUserData(username);
+      return true;
     }
     else {
       console.log("Registration needed");
-      // Need to "register" a new username
-      const registration_window = document.getElementById('registration');
-      //alert(registration_window);
-      registration_window.style.display = "block";
+      return false;
     }
   }
 
@@ -61,7 +61,7 @@ class App extends React.Component {
   syncUserData(username) {
     // may want to add additional call to is_legal_username
     // This ref refers to a piece of data in firebase, not react's refs
-    this.ref = base.syncState('/users/' + username,
+    this.ref = base.syncState(`users/${username}`,
     {
       context: this,
       state: 'user',
@@ -76,11 +76,14 @@ class App extends React.Component {
   // Expects a username (string), returns an error describing problem or an empty string if ok.
   is_legal_username(username) {
     // eliminate leading and trailing spaces
-    let re_space_before = new RegExp('^\s');
-    let re_space_after = new RegExp('\s$');
-    let re_illegal_characters = new RegExp('[^a-zA-Z\d @_?!~-]');
-    if (re_space_before.test(username) || re_space_after.test(username)) {
-      return "Please remove any leading/trailing spaces.";
+    let re_space_before = new RegExp('^ ');
+    let re_space_after = new RegExp(' $');
+    let re_illegal_characters = new RegExp('[^a-zA-Z0-9 @_?!~-]');
+    if (re_space_before.test(username)) {
+      return "Please remove the leading spaces from your name."
+    }
+    if (re_space_after.test(username)) {
+      return "Please remove the trailing spaces from your name.";
     }
     // it also allows stuff like ()%*^$\ but let's *not* break regular expressions...
     if (re_illegal_characters.test(username)) {
@@ -91,17 +94,16 @@ class App extends React.Component {
     }
   }
 
+  // A vote has been recorded (clicked on a value in voting component)
   doVote = (event => {
     const my_rating = Number(event.target.id.substr(4));
     // Write value
     const biome = this.state.biomes[this.state.current_biome];
 
     const biome_name = biome.biome_entry_name;
-    const is_my_favorite = false;
     const rating = {
       biome_entry_name: biome_name,
       my_rating: my_rating,
-      is_my_favorite: is_my_favorite
     }
     // todo - this needs to match input
     let user_ratings = this.state.user.ratings;
@@ -188,6 +190,166 @@ class App extends React.Component {
     this.setState({current_biome: event.target.id});
   }
 
+  getStarted = () => {
+    // Someone clicked the "get started" button on launch page
+      const current_biome = 0;
+      this.setState({current_biome});
+      let is_logged_in = true;
+      this.setState({is_logged_in});
+  }
+
+  // Shows current poll results.  If user hasn't registered, prompt them here too
+  launchPage = () => {
+    return(
+      <div className="App">   
+        <header></header>
+
+        <div className="empty-space"></div>
+        
+        <main>
+          <section>
+            <span className="heading">Rank your biomes</span><br />
+              Each page will be for a specific biome.  Rank each one by how much you want to see that biome (ie., how frequently).  So if you want to see
+              something more - give it 10.  If you don't want to see it at all - give it a 0 (🚫).
+          </section>
+
+          {this.registrationSection()}
+        </main>
+      </div>
+    );
+  }
+
+  
+  // Small section to display prompt for username.
+  registrationSection = () => {
+    // This person is definitely a returning user or has registered
+    if (this.state.is_logged_in) {
+      return (
+        <section>
+          <div onClick={this.getStarted} className="heading" id="get-started" className="clickable">Click here to get started</div>
+        </section>
+      )
+    }
+    else {
+      // This person could be a returning user - check for username
+      return (
+        <section id="registration" className="not-hidden">
+          <span className="heading">Registration</span><br />
+          It looks like you haven't been here before.  Please enter a username so you can begin voting!<br />
+          <input type="text" id="username-box"></input>
+          <button value="register" onClick={this.createUsername}>Register</button>
+          <span id="error-messages" className="hidden"></span>
+        </section>
+      );
+    }
+  }
+
+  // Checks for validity and adds username
+  // Also populates/hides error-messages box in registration
+  createUsername = (event) => {
+    const username = document.getElementById('username-box').value;
+    let response = this.is_legal_username(username);
+    const errorBox = document.getElementById('error-messages');
+    if (response !== "") {
+      errorBox.className="warning";
+      errorBox.textContent=response;
+    }
+    else {
+      // Check for duplicate name
+      base.fetch('users', {
+        context: this,
+        asArray: false,
+        then(data){
+          const names = Object.keys(data);
+          if (names.includes(username)) {
+            errorBox.className="warning";
+            errorBox.textContent="This name is already taken.  Please choose another.";
+          }
+          else {
+            console.log("Registration Success");
+            errorBox.className="hidden";
+            errorBox.textContent="";
+          
+            localStorage.setItem('username', username);
+            const user = {
+              name: username,
+              ratings: [
+                {
+                  biome_entry_name: "biomesoplenty:alps",
+                  my_rating: -1
+                }
+              ]
+            }
+            //this.setState({user});
+
+            base.post(`users/${username}`, {
+              data: {
+                name: username, 
+                ratings: [
+                  {
+                    biome_entry_name: "biomesoplenty:alps",
+                    my_rating: -1
+                  }
+                ]
+              }
+            }).then(() => {
+              this.syncUserData(username);
+              this.setState({user, username, is_logged_in: true});
+              //this.setState({username: username});
+            }).catch(err => {
+              // handle error
+            });
+            
+
+            
+            
+            //const registration_box = document.getElementById('registration');
+            //registration_box.style.display="hidden";
+            
+          }
+        }
+      });
+    }
+  }
+
+  // The voting/biome pages - only if user is logged in
+  votingPage = () => {
+    let biome = this.state.biomes[this.state.current_biome];
+
+    return (
+      <div className="App">   
+        <header></header>
+
+        <NavigationSidebar 
+          biomes={getBiomeNameList(this.state.biomes)}
+          do_navigation = {this.doNavigation}
+          show_navbar = {this.state.show_navbar}
+          showBiomeList = {this.showBiomeList}
+        />
+
+        <BiomePage
+          biome={biome}
+          user_rating = {get_user_rating_for_biome(biome.biome_entry_name, this.state.user.ratings)}
+          do_vote = {this.doVote}
+          />
+
+        <footer><span onClick={this.doBack} className="clickable">Back</span> or <span onClick={this.doForward} className="clickable">Next</span></footer>
+      </div>
+    );
+  }
+
+  // Just a slightly nicer looking getter function
+  isLoggedIn = () => {
+    return this.state.is_logged_in;
+  }
+
+  // Makes biome list drop down (NavigationSidebar)
+  // This is a toggle function
+  showBiomeList = () => {
+    let show_navbar = !this.state.show_navbar;
+    this.setState({show_navbar});
+  }
+
   // note to self- current biome highlight, do from app.css
 
   // temp removed everything
@@ -197,51 +359,33 @@ class App extends React.Component {
 	}
   */
   render() { 
-    if (this.state.biomes.length === 0) {
-      return (
-        <div>Loading data....</div>
-      )
+    if (!this.isLoggedIn || this.state.current_biome === -1) {
+      // Show results landing page w/ a get started button
+      return(<React.Fragment>{this.launchPage()}</React.Fragment>);
     }
-    else {
-      let biome = this.state.biomes[this.state.current_biome];
 
-      return (
-        <div className="App">   
-          <header>Voting for Biomes!</header>
-  
-          <NavigationSidebar 
-            biomes={getBiomeNameList(this.state.biomes)}
-            do_navigation = {this.doNavigation}
-          />
-  
-          <BiomePage
-            biome={biome}
-            user_rating = {get_user_rating_for_biome(biome.biome_entry_name, this.state.user.ratings)}
-            do_vote = {this.doVote}
-            />
-  
-          <footer><span onClick={this.doBack} className="clickable">Back</span> or <span onClick={this.doForward} className="clickable">Next</span></footer>
-          <section id="registration" className="hidden">Registration</section>
-        </div>
-      );
+    else {
+      // The original failsafe - just leaving in to be safe
+      if (this.state.biomes.length === 0) {
+        return (
+          <div>Loading data....</div>
+        )
+      }
+      else {
+        return (<React.Fragment>{this.votingPage()}</React.Fragment>);
+      }
     }
   }
 }
 
 
-  /*
-
-  // This expression will probably change over to decomposing objects from database
-  //biome = sampleData;
-  //user_rating = get_user_rating_for_biome(biome.entry_name, user.ratings);
-
-*/
-
 // This takes just the user's ratings from the user object to be used with BiomePage component.
 // Input: biome = string (biome_entry_name), user_ratings (array of user ratings from user object)
 function get_user_rating_for_biome(biome, user_ratings) {
+  if (!user_ratings) {
+    return;
+  }
   for(let i=0; i<user_ratings.length; i++) {
-    //console.log("get_user_ratings_..() - user_ratings: " + user_ratings)
     let entry = user_ratings[i];
     const values = Object.values(entry);
     if (values[0] === biome) {
@@ -251,7 +395,6 @@ function get_user_rating_for_biome(biome, user_ratings) {
   }
   // There were no user ratings
   return -1;
-  //console.log(`get_user_rating_for_biome(${biome}) - No ratings found`);
 }
 
 
@@ -267,30 +410,8 @@ function getBiomeNameList(biomes) {
 }
 
 
+function decorate_navigation_bar (){
+  const checkmark = "✔️";
+}
 
 export default App;
-
-
-/*
-// Old sample data
-        user: {
-          name: "Me",
-          ratings: [
-            {
-              biome_entry_name: "biomesoplenty:alps",
-              my_rating: 6,
-              is_my_favorite: false
-            },
-            {
-              biome_entry_name: "biomesoplenty:bayou",
-              my_rating: 4,
-              is_my_favorite: false
-            },
-            {
-              biome_entry_name: "biomesoplenty:bog",
-              my_rating: 2,
-              is_my_favorite: false
-            }
-          ]
-      }
-*/

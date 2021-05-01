@@ -4,7 +4,14 @@ import Comments from './Comments';
 import './style/BiomePage.css';
 
 const BiomePage = (props) => {
-	const {biome, user_rating, do_vote} = props;
+	let {biome, user_rating, do_vote} = props;
+
+	if (!user_rating) {
+		user_rating = {
+			biome_entry_name: "biomesoplenty:alps",
+			my_rating: -1,
+		}
+	}
 
 	return ( 
 		<main>
@@ -15,12 +22,10 @@ const BiomePage = (props) => {
 			/>
 			<BiomeStatistics 
 				ratings={biome.ratings} 
-				my_rating={user_rating.my_rating} 
+				my_rating={user_rating.my_rating}
 				do_vote={do_vote}
 			/>
-			<Comments 
-				comments={biome.biome_comments}
-			/>
+
 		</main>
 	 );
 	}
@@ -29,7 +34,8 @@ export default BiomePage;
 
 /*
 
-
-
+			<Comments 
+				comments={biome.biome_comments}
+			/>
 
 */
