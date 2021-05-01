@@ -141,3 +141,18 @@ figure {
 	border: 0;
 	padding: 5px;
 }
+
+.current-results {
+	margin-top: 20px;
+}
+
+.statistics-box {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.toggle {
+	font-size: 0.7em;
+	color: blue;
+}

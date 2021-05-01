@@ -227,7 +227,6 @@ class App extends React.Component {
       </div>
     );
   }
-
   
   // Small section to display prompt for username.
   registrationSection = () => {
@@ -335,6 +334,7 @@ class App extends React.Component {
           show_navbar = {this.state.show_navbar}
           showBiomeList = {this.showBiomeList}
           current_biome = {this.state.current_biome}
+          user_votes = {this.state.user.ratings}
         />
 
         <BiomePage

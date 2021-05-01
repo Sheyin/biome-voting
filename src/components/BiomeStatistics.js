@@ -103,13 +103,55 @@ const BiomeStatistics = (props) => {
 		}
 	}
 
+	// Show the breakdown of actual votes
+	const showResults = () => {
+		const currentResultsBox = document.getElementById('current-results-content');
+		// if it was hidden, flip it
+		currentResultsBox.classList.toggle("hidden");
+	}
+
+
+	// This tallies the different votes for this biome.
+	const tallyVotes = () => {
+		let yes_counter = 0;
+		let no_counter = 0;
+		let maybe_counter = 0;
+		for (let i=0; i<ratings.length; i++) {
+			switch(ratings[i]) {
+				case 0:
+					no_counter++;
+					break;
+				case 1:
+					maybe_counter++;
+					break;
+				case 2:
+					yes_counter++;
+					break;
+			}
+		}
+		return(
+			<div className="current-results">
+				<div className="hidden" id="current-results-content">
+					<span className="heading">Current Results:</span><br />
+					Yes: {yes_counter}<br />
+					No: {no_counter}<br />
+					Maybe: {maybe_counter}<br />
+				</div>
+				<div className="toggle" onClick={showResults}>Toggle breakdown of votes</div>
+			</div>
+		)
+	}
+
 	return ( 
 		<section className="split-box content neumorphism-white">
-			<div className="split-box-half">
-				<span className="heading">Statistics</span><br />
-				<span className="label">Current number of votes:</span> {ratings.length} <br />
-				{showMyRating()}
-				{showAverage()}
+			<div className="split-box-half statistics-box">
+				<div className="statistics-text-box">
+					<span className="heading">Statistics</span><br />
+					<span className="label">Current number of votes:</span> {ratings.length} <br />
+					{showMyRating()}
+					{showAverage()}
+				</div>
+				{tallyVotes()}
 			</div>
 
 			<div className="split-box-half voting no-highlight">

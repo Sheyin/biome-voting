@@ -18,6 +18,8 @@ const BiomePage = (props) => {
 		biome.comments = [];
 	}
 
+	
+
 	return ( 
 		<main>
 			<section className="title neumorphism-white">{biome.biome_short_name}</section>
