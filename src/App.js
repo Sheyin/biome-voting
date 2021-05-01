@@ -3,6 +3,8 @@ import './App.css';
 import BiomePage from './components/BiomePage';
 import NavigationSidebar from './components/NavigationSidebar';
 import base from "./base";
+import "firebase/auth";
+
 
 
 class App extends React.Component {
@@ -438,8 +440,12 @@ function getBiomeNameList(biomes) {
 }
 
 
+
+
+/*
+Not currently used - it might look kinda ugly
 function decorate_navigation_bar (){
   const checkmark = "✔️";
-}
+} */
 
 export default App;
