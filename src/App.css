@@ -16,13 +16,6 @@ header {
 	border-bottom: 2px solid black; */
 }
 
-footer {
-	font-size: 1.3em;
-	grid-column-start: 2;
-	text-align: center;
-	margin-bottom: 20px;
-}
-
 /* This fills in the void from the removed nav bar on launch page */
 #empty-space {
 	grid-row-start: 2;
@@ -34,10 +27,17 @@ footer {
 	margin: auto;
 }
 
+.nav-title {
+	padding-left: 15px;
+}
+
 .navigation {
 	font-size: 1.2em;
-	padding: 2px;
 	margin-bottom: 10px;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	padding-right: 5px;
+	padding-left: 15px;
 	/*
 	border: 1px solid #000000;
 	background-color: white;
@@ -52,9 +52,6 @@ footer {
 	margin-left: 0px;
 	margin-top: 20px;
 	animation: slidein 1s linear 0s;
-	border-radius: 22px;
-	background: linear-gradient(145deg, #f6faff, #cfd3d8);
-	box-shadow: 6px 6px 10px #a8abaf, -6px -6px 10px #ffffff;
 }
 
 @keyframes slidein {
@@ -93,13 +90,17 @@ footer {
 	}
 }
 
+nav div.navigation-links div.navigation:hover {
+	background-color: #6598e6;
+	border-radius: 0px 17px 17px 0px;
+}
+
 .navigation-links {
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
 	animation: fadeTextIn 1s linear 0.5s;
 	padding-top: 20px;
-	padding-left: 10px;
 	grid-row-start: 2;
 	grid-row-end: span 3;
 	opacity: 1;
@@ -109,27 +110,30 @@ footer {
 	margin-top: 20px;
 	width: 20px;
 	animation: slideout 1s linear 0s;
-	border-radius: 22px;
-	background: linear-gradient(145deg, #f6faff, #cfd3d8);
-	box-shadow: 6px 6px 10px #a8abaf, -6px -6px 10px #ffffff;
-}
-
-/* This may be replaced by hidden-nav-bar */
-.biome-list-button {
-	max-height: 30px;
-	max-width: 120px;
-	margin-left: 0px;
-	margin-top: 20px;
-	padding-top: 20px;
-	padding-left: 10px;
-	padding: 20px;
-	border-radius: 22px;
-	background: linear-gradient(145deg, #f6faff, #cfd3d8);
-	box-shadow: 6px 6px 10px #a8abaf, -6px -6px 10px #ffffff;
 }
 
 .clickable {
 	cursor: pointer;
+}
+
+footer {
+	font-size: 1.3em;
+	grid-column-start: 2;
+	text-align: center;
+	margin-top: 20px;
+	margin-bottom: 40px;
+	margin-left: auto;
+	margin-right: auto;
+	width: 30%;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+}
+
+.navigation-bottom-button {
+	display: inline;
+	padding: 10px;
+	user-select: none;
 }
 
 /* Registration page - only appears if this appears to be a new user */
@@ -155,6 +159,24 @@ html {
 	/* background-color: #9bb9d1;*/
 	background-color: #d4deed;
 	color: black;
+}
+
+.neumorphism-blue {
+	border-radius: 17px;
+	background: linear-gradient(145deg, #78b5ff, #6598e6);
+	box-shadow: 4px 4px 10px #416294, -4px -4px 10px #9ff0ff;
+}
+
+.neumorphism-white {
+	border-radius: 22px;
+	background: linear-gradient(145deg, #f6faff, #cfd3d8);
+	box-shadow: 6px 6px 10px #a8abaf, -6px -6px 10px #ffffff;
+}
+
+.neumorphism-inset {
+	border-radius: 0px 17px 17px 0px;
+	background: #f6faff;
+	box-shadow: inset 7px 7px 63px #cacdd1, inset -7px -7px 63px #ffffff;
 }
 
 @media screen and (min-width: 1200px) {

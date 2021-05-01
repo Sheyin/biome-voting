@@ -19,7 +19,8 @@ const BiomeStatistics = (props) => {
 		showAverage();
 	})
 
-	// Calculates the average of the ratings, returns a number (float/double)
+	//  Modified - takes the array of ratings (integers) and returns a string
+	// indicating roughly where the average votes are
 	const average = () => {
 		//console.log("Average from these values: " + ratings);
 		let total = 0;
@@ -27,9 +28,44 @@ const BiomeStatistics = (props) => {
 			total += x;
 		})
 		// Rounding result - this will produce a string
-		let average = (total/ratings.length).toPrecision(3);
-		//console.log(`Calculated average: ${average}`);
-		return Number(average);
+		let average = Number(total/ratings.length);
+		console.log(`Calculated average: ${average}`);
+		console.log(typeof(average));
+
+		// TIL.  Switch only works with discrete values.
+		if (average === 0) {
+			return "Hated";
+		}
+		if (average < 0.5) {
+			return "Unwanted";
+		}
+		if (average < 1) {
+			return "Disliked";
+		}
+		if (average === 1) {
+			return "Neutral";
+		}
+		if (average < 1.5) {
+			return "Liked";
+		}
+		if (average === 2) {
+			return "Hell yes";
+		}
+		// This should never be reached unless I was messing with the database.
+		return "Error in average().  This shouldn't be possible.";
+	} 
+
+	// Converts the numeric values into yes/no/maybe
+	// Expects an integer, returns a string
+	const convertIntoYesOrNo = (rating) => {
+		switch(rating) {
+			case 0:
+				return "No";
+			case 1:
+				return "Maybe";
+			case 2:
+				return "Yes";
+		}
 	}
 
 	// Render the user's vote if known, else put placeholder text telling them to vote.
@@ -37,7 +73,7 @@ const BiomeStatistics = (props) => {
 		if (my_rating > -1) {
 			return (
 			<React.Fragment>
-				<span className="label">Your vote:</span> {my_rating}<br />
+				<span className="label">Your vote:</span> {convertIntoYesOrNo(my_rating)}<br />
 			</React.Fragment>
 			)
 		}
@@ -68,7 +104,7 @@ const BiomeStatistics = (props) => {
 	}
 
 	return ( 
-		<section className="split-box content">
+		<section className="split-box content neumorphism-white">
 			<div className="split-box-half">
 				<span className="heading">Statistics</span><br />
 				<span className="label">Current number of votes:</span> {ratings.length} <br />
@@ -76,11 +112,10 @@ const BiomeStatistics = (props) => {
 				{showAverage()}
 			</div>
 
-			<div className="split-box-half voting">
+			<div className="split-box-half voting no-highlight">
 				<span className="heading">Voting</span><br />
-				How badly do you want this biome? <br />
-				🚫... Not at all <br />
-				❤️... More hearts, more often! <br />
+				Do you want to see this biome? <br />
+
 				<Voting 
 					do_vote = {do_vote}
 					my_rating = {my_rating}

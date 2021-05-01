@@ -210,10 +210,16 @@ class App extends React.Component {
         <div className="empty-space"></div>
         
         <main>
-          <section>
+          <section className="neumorphism-white">
             <span className="heading">Rank your biomes</span><br />
-              Each page will be for a specific biome.  Rank each one by how much you want to see that biome (ie., how frequently).  So if you want to see
-              something more - give it 10.  If you don't want to see it at all - give it a 0 (🚫).
+              <p>
+              Each page will be for a specific biome.  There's a yes / no / maybe option for each biome - vote however you wish, and you can 
+              change your vote whenever you'd like, or skip voting for it entirely.  Click on the back / next buttons to navigate, or you can
+              pull out the biome list from the left hand side.
+              </p>
+              <p>
+              This site probably isn't very good for mobile yet.  Sorry!
+              </p>
           </section>
 
           {this.registrationSection()}
@@ -228,7 +234,7 @@ class App extends React.Component {
     // This person is definitely a returning user or has registered
     if (this.state.is_logged_in) {
       return (
-        <section>
+        <section className="neumorphism-blue">
           <div onClick={this.getStarted} id="get-started" className="heading clickable">Click here to get started</div>
         </section>
       )
@@ -236,7 +242,7 @@ class App extends React.Component {
     else {
       // This person could be a returning user - check for username
       return (
-        <section id="registration" className="not-hidden">
+        <section id="registration" className="not-hidden neumorphism-white">
           <span className="heading">Registration</span><br />
           It looks like you haven't been here before.  Please enter a username so you can begin voting!<br />
           <input type="text" id="username-box"></input>
@@ -328,6 +334,7 @@ class App extends React.Component {
           do_navigation = {this.doNavigation}
           show_navbar = {this.state.show_navbar}
           showBiomeList = {this.showBiomeList}
+          current_biome = {this.state.current_biome}
         />
 
         <BiomePage
@@ -346,8 +353,13 @@ class App extends React.Component {
 
   addComment = (event) => {
     const commentBox = document.getElementById('comment-entry');
-    const comment_text = commentBox.value;
+    const comment_text = commentBox.value.trim();
     const now = new Date(Date.now());
+
+    // If it is an empty comment, ie, an accidental click, do not add it
+    if (comment_text === "") {
+      return;
+    }
 
     // Create a new comment object
     const comment = {

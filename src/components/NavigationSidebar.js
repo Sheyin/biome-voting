@@ -1,7 +1,9 @@
-import React from "react"
+import React, { useEffect } from "react"
 
 
 const NavigationSidebar = (props) => {
+
+
 
 
 	if (props.show_navbar) {
@@ -9,23 +11,28 @@ const NavigationSidebar = (props) => {
 		let i = 0;
 	
 		props.biomes.forEach(biome => {
-			links.push(<div className="navigation clickable" key={i} id={i} onClick={props.do_navigation}>{biome}</div>);
+			if (i === props.current_biome) {
+				links.push(<div className="navigation clickable neumorphism-inset" key={i} id={i} onClick={props.do_navigation}>{biome}</div>);
+			}
+			else {
+				links.push(<div className="navigation clickable" key={i} id={i} onClick={props.do_navigation}>{biome}</div>);
+			}
 			i++;
 		})
 		return (
-			<nav className="visible-nav-bar">
+			<nav className="visible-nav-bar neumorphism-white">
 				<div className="navigation-links">
-					<span className="heading test" onClick={props.showBiomeList}>Biome List</span><br />
+					<span className="heading nav-title" onClick={props.showBiomeList}>Biome List</span><br />
 					{links}
 				</div>
-				<div className="hidden-nav-bar" onClick={props.showBiomeList}></div>
+				<div className="hidden-nav-bar neumorphism-white" onClick={props.showBiomeList}></div>
 			</nav>
 			);
 	}
 	else {
 		// This is the minimized version of the biome list (hidden)
 		return (
-			<div className="hidden-nav-bar" onClick={props.showBiomeList}></div>
+			<nav className="hidden-nav-bar neumorphism-white" onClick={props.showBiomeList}></nav>
 		)
 	}
 }

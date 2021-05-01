@@ -20,10 +20,12 @@ const BiomePage = (props) => {
 
 	return ( 
 		<main>
-			<section className="title">{biome.biome_short_name}</section>
+			<section className="title neumorphism-white">{biome.biome_short_name}</section>
 			<BiomeDescription 
 				description={biome.description}
 				image={biome.image_name}
+				link={biome.link_to_wiki}
+				type={biome.type}
 			/>
 			<BiomeStatistics 
 				ratings={biome.ratings} 
@@ -31,7 +33,10 @@ const BiomePage = (props) => {
 				do_vote={do_vote}
 			/>
 
-			<footer><span onClick={do_back} className="clickable">Back</span> or <span onClick={do_forward} className="clickable">Next</span></footer>
+			<footer>
+				<div onClick={do_back} className="clickable navigation-bottom-button neumorphism-blue">Back</div>
+				<div onClick={do_forward} className="clickable navigation-bottom-button neumorphism-blue">Next</div>
+			</footer>
 
 			<Comments 
 				comments={biome.comments}

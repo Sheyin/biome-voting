@@ -16,6 +16,7 @@ with open(filename) as f:
         image_name = parsed[2].rstrip()
         description = parsed[3].rstrip()
         link_to_wiki = parsed[4].rstrip()
+        biome_type = parsed[5].rstrip()
         #print(biome_short_name + " " + description)
         #print("url: ===" + link_to_wiki + "===")
         biome_data = {
@@ -24,7 +25,7 @@ with open(filename) as f:
             'image_name': image_name,
             'description': description,
             'link_to_wiki': link_to_wiki,
-            'ratings': [],
+            'type': biome_type
         }
         biomes.append(biome_data)
 

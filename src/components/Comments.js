@@ -41,14 +41,15 @@ const Comments = (props) => {
 				<textarea 
 					id="comment-entry"
 					name="comment" 
+					placeholder="Say something..."
 					/><br />
-				<button name="submit" onClick={props.add_comment}>Leave Comment</button>
+				<button name="submit" onClick={props.add_comment} id="comment-submit" className="neumorphism-blue">Leave Comment</button>
 			</div>
 		)
 	}
 
 	return ( 
-			<section className="content split-box">
+			<section className="content split-box neumorphism-white">
 				<div className="comment-list split-box-half">
 					<span className="heading">Comments</span><br />
 					{makeComments()}

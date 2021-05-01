@@ -15,9 +15,6 @@ section {
 	margin-left: auto;
 	margin-right: auto;
 	padding: 20px;
-	border-radius: 22px;
-	background: linear-gradient(145deg, #f6faff, #cfd3d8);
-	box-shadow: 6px 6px 10px #a8abaf, -6px -6px 10px #ffffff;
 }
 
 .content {
@@ -28,11 +25,29 @@ section {
 	width: 300px;
 	height: 169px;
 	margin-right: 0px;
+	border-radius: 10px;
 }
 
 figcaption {
 	display: inline;
 	max-width: 50%;
+	position: relative;
+}
+
+.description {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	min-width: 50%;
+}
+
+.details-box {
+	display: flex;
+	justify-content: space-between;
+	position: absolute;
+	bottom: 0;
+	font-size: 0.7em;
+	width: 100%;
 }
 
 figure {
@@ -44,12 +59,6 @@ figure {
 	max-width: 50%;
 }
 
-.description {
-	display: flex;
-	flex-direction: row;
-	justify-content: space-between;
-}
-
 .split-box {
 	display: flex;
 	flex-direction: row;
@@ -59,10 +68,19 @@ figure {
 .voting {
 	display: flex;
 	flex-direction: column;
+	margin-right: 40px;
 }
 
 .voting-grid {
 	margin-top: 20px;
+}
+
+/* These are the thumbs up/down */
+.vote-option {
+	opacity: 0.3;
+	user-select: none;
+	margin-right: 20px;
+	font-size: 2em;
 }
 
 .heading {
@@ -74,6 +92,10 @@ figure {
 	border: 0;
 	font-size: 2.3em;
 	font-weight: bold;
+}
+
+.no-highlight {
+	user-select: none;
 }
 
 .label {
@@ -89,6 +111,7 @@ figure {
 	padding-bottom: 100px;
 	font-size: 30px;
 	line-height: 28px;
+	border-radius: 17px;
 }
 
 .comment-list {
@@ -112,4 +135,9 @@ figure {
 
 .comment-username {
 	font-weight: bold;
+}
+
+#comment-submit {
+	border: 0;
+	padding: 5px;
 }
