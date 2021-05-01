@@ -129,7 +129,7 @@ class App extends React.Component {
 
         // Debug text that will probably be removed soon.
         //console.log(`Found biome ${biome_name} = ${entry.biome_entry_name}`)
-        console.log(`user's old rating: ${my_old_rating} new rating: ${entry.my_rating}`)
+        //console.log(`user's old rating: ${my_old_rating} new rating: ${entry.my_rating}`)
 
         // edit rating for biomes list rating
         // probably not good to have this in twice but I'm kind of in a hurry
@@ -363,7 +363,7 @@ class App extends React.Component {
     biome_comments.push(comment);
     this.setState({biomes});
     //comment added?
-    console.log(comment.author + " " + comment.date + " " + comment.text);
+    //console.log(comment.author + " " + comment.date + " " + comment.text);
   }
 
   // Just a slightly nicer looking getter function

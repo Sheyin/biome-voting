@@ -76,7 +76,7 @@ const BiomeStatistics = (props) => {
 				{showAverage()}
 			</div>
 
-			<div className="split-box-half">
+			<div className="split-box-half voting">
 				<span className="heading">Voting</span><br />
 				How badly do you want this biome? <br />
 				🚫... Not at all <br />

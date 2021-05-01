@@ -28,13 +28,6 @@ section {
 	margin-right: 0px;
 }
 
-.torch {
-	width: 10px;
-	height: 28px;
-	margin-left: 3px;
-	margin-right: 3px;
-}
-
 figcaption {
 	display: inline;
 	max-width: 50%;
@@ -59,6 +52,15 @@ figure {
 	display: flex;
 	flex-direction: row;
 	justify-content: space-between;
+}
+
+.voting {
+	display: flex;
+	flex-direction: column;
+}
+
+.voting-grid {
+	margin-top: 20px;
 }
 
 .heading {
@@ -97,6 +99,7 @@ figure {
 .comment {
 	margin-bottom: 10px;
 	white-space: pre-wrap;
+	animation: fadeTextIn 1s linear 0s;
 }
 
 .comment-header {

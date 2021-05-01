@@ -19,7 +19,7 @@ const Voting = (props) => {
 		makeOpaque(props.my_rating);
 	});
 
-	return ( <div>
+	return ( <div className="voting-grid">
 				<span className="clickable" id="vote0" onMouseOver={onHover} onClick={do_vote}>{value_zero}</span>
 				<span className="clickable" id="vote1" onMouseOver={onHover} onClick={do_vote}>{value_positive}</span>
 				<span className="clickable" id="vote2" onMouseOver={onHover} onClick={do_vote}>{value_positive}</span>
