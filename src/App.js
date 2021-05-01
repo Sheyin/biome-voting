@@ -44,7 +44,7 @@ class App extends React.Component {
   // Not the most secure system here
   checkIfReturningUser = () => {
     let username = localStorage.getItem('username');
-    console.log("Returning Username:" + username);
+    //console.log("Returning Username:" + username);
     // user has been here before
     if (username) {
       this.setState({username, is_logged_in: true});

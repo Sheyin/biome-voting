@@ -63,6 +63,8 @@ const BiomeStatistics = (props) => {
 				return "Maybe";
 			case 2:
 				return "Yes";
+			default:
+				return; //should never hit this
 		}
 	}
 
@@ -125,6 +127,8 @@ const BiomeStatistics = (props) => {
 				case 2:
 					yes_counter++;
 					break;
+				default:
+					return; //should never hit this
 			}
 		}
 		return(

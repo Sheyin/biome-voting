@@ -2,11 +2,6 @@
 const BiomeDescription = (props) => {
   const {description, image, link, type} = props;
 
-  // Use a placeholder image if the filename was not provided
-  if (!image) {
-    image = "placeholder.png"
-  }
-
   // Renders a link to the wiki entry if it exists, else returns nothing.
   const wikiLink = () => {
     if (link === "") {
