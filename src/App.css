@@ -1,7 +1,7 @@
 .App {
 	display: grid;
 	grid-template-columns: [nav] 15% [main] auto;
-	row-gap: 10px;
+	row-gap: 15px;
 }
 
 header {
@@ -155,4 +155,12 @@ html {
 	/* background-color: #9bb9d1;*/
 	background-color: #d4deed;
 	color: black;
+}
+
+@media screen and (min-width: 1200px) {
+	main {
+		font-size: 1.3em;
+		width: 70%;
+		margin-left: 5%;
+	}
 }
