@@ -31,8 +31,9 @@ with open(filename) as f:
         # Get new line to sustain while loop
         line = f.readline()
 
-# Test out this object....
-result = json.dumps(biomes)
-f = open(end_filename, "a")
+# Need to wrap this into another object to match what's expected in the app/db
+db_object = {"biomes": biomes}
+result = json.dumps(db_object)
+f = open(end_filename, "w")
 f.write(result)
 f.close()
