@@ -1,7 +1,6 @@
 import Voting from './Voting';
 import React, { useEffect } from 'react';
 
-
 const BiomeStatistics = (props) => {
 	let {ratings, my_rating, do_vote} = props;
 
@@ -38,7 +37,7 @@ const BiomeStatistics = (props) => {
 		if (my_rating > -1) {
 			return (
 			<React.Fragment>
-				[<span className="label">Your vote:</span> {my_rating}]<br />
+				<span className="label">Your vote:</span> {my_rating}<br />
 			</React.Fragment>
 			)
 		}
@@ -69,15 +68,15 @@ const BiomeStatistics = (props) => {
 	}
 
 	return ( 
-		<section className="statistics-and-voting content">
-			<div className="statistics split-box">
+		<section className="split-box content">
+			<div className="split-box-half">
 				<span className="heading">Statistics</span><br />
 				<span className="label">Current number of votes:</span> {ratings.length} <br />
 				{showMyRating()}
 				{showAverage()}
 			</div>
 
-			<div className="voting split-box">
+			<div className="split-box-half">
 				<span className="heading">Voting</span><br />
 				How badly do you want this biome? <br />
 				🚫... Not at all <br />

@@ -99,17 +99,18 @@ class App extends React.Component {
     const my_rating = Number(event.target.id.substr(4));
     // Write value
     const biome = this.state.biomes[this.state.current_biome];
-
     const biome_name = biome.biome_entry_name;
     const rating = {
       biome_entry_name: biome_name,
       my_rating: my_rating,
     }
+
     // todo - this needs to match input
     let user_ratings = this.state.user.ratings;
     if (!user_ratings) {
       user_ratings = [];
     }
+
     let biome_ratings = biome.ratings;
     // Need to handle case if there are no ratings, ie., firebase erased the empty array.
     if (!biome_ratings) {
@@ -117,6 +118,7 @@ class App extends React.Component {
     }
 
     // Check if the user has voted before
+    let has_voted = false;
     for (let i=0; i<user_ratings.length; i++) {
       let entry = user_ratings[i];
       if (entry.biome_entry_name === biome_name) {
@@ -127,8 +129,7 @@ class App extends React.Component {
 
         // Debug text that will probably be removed soon.
         //console.log(`Found biome ${biome_name} = ${entry.biome_entry_name}`)
-        //console.log(`user's old rating: ${my_old_rating} new rating: ${entry.my_rating}`)
-        //console.log(`User's new rating for ${biome_name}: ${entry.my_rating}`)
+        console.log(`user's old rating: ${my_old_rating} new rating: ${entry.my_rating}`)
 
         // edit rating for biomes list rating
         // probably not good to have this in twice but I'm kind of in a hurry
@@ -138,15 +139,16 @@ class App extends React.Component {
         }
         else {
           biome_ratings[index] = my_rating;
+          has_voted = true;
         }
-        return;
       }
     } // end for-loop
 
-    // entry not found (hasn't voted on this before)
-    // Value was not found in user's vote history - new entry needed
-    user_ratings.push(rating);
-    biome_ratings.push(my_rating);
+    if(!has_voted) {
+      // Value was not found in user's vote history - new entry needed
+      user_ratings.push(rating);
+      biome_ratings.push(my_rating);
+    }
 
     // Re-integrate changes back into the (copies of) objects they came from
     let biomes = this.state.biomes;
@@ -157,7 +159,6 @@ class App extends React.Component {
   
     this.setState({user: {
                     ratings: user_ratings}});
-
     this.setState({ biomes });
   })
 
@@ -226,7 +227,7 @@ class App extends React.Component {
     if (this.state.is_logged_in) {
       return (
         <section>
-          <div onClick={this.getStarted} className="heading" id="get-started" className="clickable">Click here to get started</div>
+          <div onClick={this.getStarted} id="get-started" className="heading clickable">Click here to get started</div>
         </section>
       )
     }
@@ -331,11 +332,38 @@ class App extends React.Component {
           biome={biome}
           user_rating = {get_user_rating_for_biome(biome.biome_entry_name, this.state.user.ratings)}
           do_vote = {this.doVote}
+          do_back = {this.doBack}
+          do_forward = {this.doForward}
+          add_comment = {this.addComment}
           />
 
-        <footer><span onClick={this.doBack} className="clickable">Back</span> or <span onClick={this.doForward} className="clickable">Next</span></footer>
+        
       </div>
     );
+  }
+
+  addComment = (event) => {
+    const commentBox = document.getElementById('comment-entry');
+    const comment_text = commentBox.value;
+    const now = new Date(Date.now());
+
+    // Create a new comment object
+    const comment = {
+      author: this.state.username,
+      date: now.toString(),
+      text: comment_text,
+    }
+
+    // append to biome page's comments
+    let biomes = this.state.biomes;
+    let biome_comments = biomes[this.state.current_biome].comments;
+    if (!biome_comments) {
+      biome_comments = [];
+    }
+    biome_comments.push(comment);
+    this.setState({biomes});
+    //comment added?
+    console.log(comment.author + " " + comment.date + " " + comment.text);
   }
 
   // Just a slightly nicer looking getter function

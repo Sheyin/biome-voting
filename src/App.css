@@ -20,6 +20,7 @@ footer {
 	font-size: 1.3em;
 	grid-column-start: 2;
 	text-align: center;
+	margin-bottom: 20px;
 }
 
 nav {
