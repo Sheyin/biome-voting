@@ -46,7 +46,10 @@ const BiomeStatistics = (props) => {
 		if (average < 1.5) {
 			return "Liked";
 		}
-		if (average <= 2) {
+		if (average < 2) {
+			return "Loved";
+		}
+		if (average === 2) {
 			return "Hell yes";
 		}
 		// This should never be reached unless I was messing with the database.
