@@ -48,7 +48,7 @@ const BiomeDescription = (props) => {
       </div>  
     </figcaption>
     <figure><img 
-      src={require('../data/' + image).default} 
+      src={require('../image/' + image).default} 
       alt=""
       className="biome-image"
       /></figure>

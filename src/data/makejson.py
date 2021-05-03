@@ -2,13 +2,12 @@ import json
 filename = "biomedata.tsv"
 end_filename = "biomes.json"
 
-# This exects a tab-delineated file which will be used to initalize the database
+# This exects a tab-delineated file which will be used to initalize the database from a tsv file.
 biomes = []
 with open(filename) as f:
     line = f.readline()
     while line:
         parsed = line.split('\t')
-        # print(parsed)
 
         # Organize the data from the spreadsheet.
         biome_entry_name = parsed[0].rstrip()
@@ -17,8 +16,7 @@ with open(filename) as f:
         description = parsed[3].rstrip()
         link_to_wiki = parsed[4].rstrip()
         biome_type = parsed[5].rstrip()
-        #print(biome_short_name + " " + description)
-        #print("url: ===" + link_to_wiki + "===")
+
         biome_data = {
             'biome_entry_name': biome_entry_name,
             'biome_short_name': biome_short_name,
