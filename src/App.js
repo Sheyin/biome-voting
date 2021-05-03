@@ -218,7 +218,13 @@ class App extends React.Component {
               pull out the biome list from the left hand side.
               </p>
               <p>
-              This site probably isn't very good for mobile yet.  Sorry!
+              This site probably isn't very good for mobile yet.  Sorry!<br />
+              </p>
+              <p>
+              <span className="heading">Privacy</span><br />
+              If you'd like to be <b>anonymous</b> just enter whatever 'name' you'd like.  (Sorry, design oversight)  No info is being tracked other than 'some username'
+              and whether there was a yes/no/maybe for a biome.  And even that part isn't really looked at - the votes are anonymized and stored
+              separately under each biome.
               </p>
           </section>
 
